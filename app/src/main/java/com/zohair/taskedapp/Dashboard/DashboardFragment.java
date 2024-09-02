@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zohair.taskedapp.R;
 import com.zohair.taskedapp.SplashScreen;
 import com.zohair.taskedapp.adapters.CardAdapter;
@@ -40,6 +41,7 @@ public class DashboardFragment extends Fragment {
     private CardViewModel cardViewModel;
     private ImageView settingsIcon;
 
+    FloatingActionButton fab;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +51,10 @@ public class DashboardFragment extends Fragment {
         settingsIcon = view.findViewById(R.id.settings_icon);
         recyclerView = view.findViewById(R.id.recyclerView);
         noRecordTextView = view.findViewById(R.id.noRecord);
+        fab = view.findViewById(R.id.add);
+
+        AppDatabase database = AppDatabase.getDatabase(getContext()); // Get the database instance
+        TodoDao todoDao = database.todoDao(); // Get the DAO
 
         // Set up the Toolbar
         toolbar.setTitle(""); // Clear default title if needed
@@ -56,7 +62,7 @@ public class DashboardFragment extends Fragment {
 
         // Initialize RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        cardAdapter = new CardAdapter(new ArrayList<>());
+        cardAdapter = new CardAdapter(new ArrayList<>(),database);
         recyclerView.setAdapter(cardAdapter);
 
         // Set up the click listener for the settings icon
@@ -66,10 +72,18 @@ public class DashboardFragment extends Fragment {
             // You can start a new activity or open a dialog here
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddTodoFragment bottomSheet = new AddTodoFragment(database);
+                bottomSheet.show(getActivity().getSupportFragmentManager(), "addTodo Fragment");
+              //  Toast.makeText(getContext(), "Add Note", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // Initialize the ViewModel
         // Initialize the ViewModel
-        AppDatabase database = AppDatabase.getDatabase(getContext()); // Get the database instance
-        TodoDao todoDao = database.todoDao(); // Get the DAO
+
         CardViewModelFactory factory = new CardViewModelFactory(todoDao);
         cardViewModel = new ViewModelProvider(this, factory).get(CardViewModel.class);
 

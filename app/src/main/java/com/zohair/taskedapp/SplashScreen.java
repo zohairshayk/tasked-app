@@ -84,7 +84,7 @@ public class SplashScreen extends AppCompatActivity {
 //                todo1.setDescription("Family gathering on occasion of Ahmed's Nikkah Ceremmony");
 //                todo1.setCreatedAt(formattedDate);
 //                todo1.setImageString("N/A");
-//
+////
 //                todoDao.insertTodo(todo);
 //                todoDao.insertTodo(todo1);
                 // After operations are done, navigate to the main activity

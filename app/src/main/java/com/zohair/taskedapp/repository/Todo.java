@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 public class Todo {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    Integer id=0;
+    Integer id;
 
    @ColumnInfo(name = "title")
     String title;
