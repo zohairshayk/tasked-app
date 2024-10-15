@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/cardColor"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -10,19 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Title"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/edittext_background"/>
 
     <EditText
         android:id="@+id/todo_description"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="5dp"
+        android:gravity="top|start"
         android:hint="Description"
-        android:inputType="text" />
+        android:inputType="text"
+        android:background="@drawable/edittext_background"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"/>
 
     <Button
         android:id="@+id/add_todo_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Todo" />
+        android:layout_marginTop="5dp"
+        android:text="Add Todo"
+        android:background="@drawable/btn_background"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

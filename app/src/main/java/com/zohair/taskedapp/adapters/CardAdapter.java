@@ -1,6 +1,8 @@
 package com.zohair.taskedapp.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.zohair.taskedapp.Dashboard.DashboardFragment;
+import com.zohair.taskedapp.Dashboard.EditFragment;
+import com.zohair.taskedapp.Dashboard.MainActivity;
 import com.zohair.taskedapp.R;
 import com.zohair.taskedapp.repository.AppDatabase;
 import com.zohair.taskedapp.repository.Todo;
@@ -49,8 +57,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Edit", Toast.LENGTH_LONG).show();
+//                Toast.makeText(view.getContext(), "Edit", Toast.LENGTH_LONG).show();
                 // Add your edit logic here
+                // Use the current activity to switch fragments
+
+                FragmentActivity activity = (FragmentActivity) view.getContext();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container2, new EditFragment())  // R.id.fragment_container is the ID of your container layout in activity_main.xml
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

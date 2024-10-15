@@ -1,6 +1,7 @@
 package com.zohair.taskedapp.Dashboard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -26,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container2, new DashboardFragment());
+        fragmentTransaction.commit();
+
+    }
+
+    public void switchToFragment(Fragment fragment) {
+        // Create a new FragmentTransaction and replace the fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container1,  fragment);
         fragmentTransaction.commit();
 
     }
