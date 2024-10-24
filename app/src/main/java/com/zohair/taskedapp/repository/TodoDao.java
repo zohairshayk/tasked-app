@@ -17,6 +17,9 @@ public interface TodoDao  {
      @Query("Select * from Todo")
      public LiveData<List<Todo>> getTodo();
 
+    @Query("SELECT * from Todo WHERE id = :id")
+    Todo selectTodoById(Integer id);
+
     @Query("DELETE FROM Todo WHERE id = :id")
     void deleteTodoById(Integer id);
 

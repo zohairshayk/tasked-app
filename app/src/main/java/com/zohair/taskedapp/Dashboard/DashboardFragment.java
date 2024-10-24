@@ -33,7 +33,7 @@ import com.zohair.taskedapp.viewmodel.CardViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements EditFragment.OnTodoUpdatedListener {
 
     private RecyclerView recyclerView;
     private TextView noRecordTextView;
@@ -100,5 +100,17 @@ public class DashboardFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onTodoUpdated(Todo updatedTodo, int position) {
+        // Get the current list from the adapter
+        List<Todo> todoList = cardAdapter.getTodoList();
+
+        // Update the item at the given position
+        todoList.set(position, updatedTodo);
+
+        // Notify the adapter that the item has changed
+        cardAdapter.notifyItemChanged(position);
     }
 }

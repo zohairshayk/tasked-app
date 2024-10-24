@@ -84,9 +84,22 @@ public class AddTodoFragment extends BottomSheetDialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_todo, container, false);
 
+        renderViews(view);
+        setListeners();
+
+
+        return view;
+    }
+
+    private void renderViews(View view) {
+
         titleTxt = view.findViewById(R.id.todo_title);
         desc = view.findViewById(R.id.todo_description);
         addBtn = view.findViewById(R.id.add_todo_button);
+
+    }
+
+    private void setListeners() {
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +140,5 @@ public class AddTodoFragment extends BottomSheetDialogFragment {
                 }
             }
         });
-
-        return view;
     }
 }
