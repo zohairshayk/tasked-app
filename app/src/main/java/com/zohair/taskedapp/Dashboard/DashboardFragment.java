@@ -1,9 +1,7 @@
 package com.zohair.taskedapp.Dashboard;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,23 +13,28 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zohair.taskedapp.R;
-import com.zohair.taskedapp.SplashScreen;
 import com.zohair.taskedapp.adapters.CardAdapter;
 import com.zohair.taskedapp.repository.AppDatabase;
 import com.zohair.taskedapp.repository.Todo;
 import com.zohair.taskedapp.repository.TodoDao;
+import com.zohair.taskedapp.retrofit.ApiClient;
+import com.zohair.taskedapp.retrofit.QuoteResponse;
+import com.zohair.taskedapp.retrofit.WebCalls;
 import com.zohair.taskedapp.viewmodel.CardViewModel;
 import com.zohair.taskedapp.viewmodel.CardViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DashboardFragment extends Fragment implements EditFragment.OnTodoUpdatedListener {
 
@@ -41,6 +44,8 @@ public class DashboardFragment extends Fragment implements EditFragment.OnTodoUp
     private CardViewModel cardViewModel;
     private ImageView settingsIcon;
 
+    private ApiClient client;
+    private WebCalls webCalls;
     FloatingActionButton fab;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +57,8 @@ public class DashboardFragment extends Fragment implements EditFragment.OnTodoUp
         recyclerView = view.findViewById(R.id.recyclerView);
         noRecordTextView = view.findViewById(R.id.noRecord);
         fab = view.findViewById(R.id.add);
+
+        getQuotes();
 
         AppDatabase database = AppDatabase.getDatabase(getContext()); // Get the database instance
         TodoDao todoDao = database.todoDao(); // Get the DAO
@@ -101,6 +108,29 @@ public class DashboardFragment extends Fragment implements EditFragment.OnTodoUp
 
         return view;
     }
+
+    private void getQuotes() {
+
+        Log.d("TAG","getQuotes()");
+
+        webCalls = ApiClient.getRetrofit().create(WebCalls.class);
+        Call<QuoteResponse> call = webCalls.getQuotes();
+        call.enqueue(new Callback<QuoteResponse>() {
+            @Override
+            public void onResponse(Call<QuoteResponse> call, Response<QuoteResponse> response) {
+                Log.d("RES","Res: "+response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<QuoteResponse> call, Throwable t) {
+
+            }
+        });
+
+
+        }
+
+
 
     @Override
     public void onTodoUpdated(Todo updatedTodo, int position) {
